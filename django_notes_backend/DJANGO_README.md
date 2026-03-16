@@ -1,415 +1,145 @@
-# Django Notes Backend - Cviko 6
+# Django Notes Backend
 
-**Student:** Dominik Sabota  
-**Course:** XPC-MMA (Cross-Platform Mobile Applications)  
-**VUT FIT:** 2025/2026  
-**Points:** 10/10
-
----
-
-## 🌐 Project Overview
-
-A Django REST API backend providing full CRUD (Create, Read, Update, Delete) operations for a notes application. Built with Django REST Framework, featuring a SQLite database and admin panel.
-
-### Features Implemented
-
-✅ **Virtual Environment & Setup (3 points)**
-- Python virtual environment created
-- Django 6.0.3 installed
-- Project structure configured
-
-✅ **REST API Functionality (7 points)**
-- Note model with database migrations
-- Django REST Framework integration
-- Serializers for JSON conversion
-- Complete CRUD operations:
-  - **GET** - Retrieve all notes
-  - **GET** - Retrieve single note
-  - **POST** - Create new note
-  - **PUT** - Update existing note
-  - **DELETE** - Delete note
-- URL routing configured
-- Admin panel setup
-
-**Total:** 10/10 points ✅
+**Course:** XPC-MMA 2025/2026 — Cviko 6 & 7  
+**Author:** Dominik Sabota  
+**GitHub:** https://github.com/dmnkSabota/XPC-MMA-2025
 
 ---
 
-## 🛠️ Technology Stack
+## Stack
 
-- **Framework:** Django 6.0.3
-- **Language:** Python 3.12.2
-- **REST Framework:** djangorestframework 3.16.1
-- **Database:** SQLite3 (default)
-- **Server:** Django development server
+| Layer | Technology |
+|---|---|
+| Backend | Django 6.0.3 + Django REST Framework |
+| Database | SQLite3 |
+| Frontend | Flutter (Dart) |
+| HTTP | http ^1.3.0 |
+| CORS | django-cors-headers 4.9.0 |
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 ```
 django_notes_backend/
-├── env/                          # Virtual environment
-└── notes/                        # Django project
-    ├── api/                      # API application
-    │   ├── migrations/
-    │   │   └── 0001_initial.py  # Note model migration
-    │   ├── __init__.py
-    │   ├── admin.py             # Admin panel config
-    │   ├── apps.py
-    │   ├── models.py            # Note model
-    │   ├── serializers.py       # NoteSerializer
-    │   ├── urls.py              # API routes
-    │   ├── views.py             # CRUD view functions
-    │   └── tests.py
-    ├── notes/                    # Project settings
-    │   ├── __init__.py
-    │   ├── settings.py          # Configuration
-    │   ├── urls.py              # Root URL config
-    │   ├── wsgi.py              # WSGI server
-    │   └── asgi.py              # ASGI server
-    ├── db.sqlite3               # SQLite database
-    └── manage.py                # Django CLI tool
+├── env/                    # Virtual environment (not tracked)
+├── flutter/
+│   └── noteapp/
+│       └── lib/
+│           ├── main.dart   # Notes list
+│           ├── note.dart   # Note detail
+│           ├── create.dart # Create note
+│           ├── update.dart # Update note
+│           └── urls.dart   # API endpoints
+└── notes/
+    ├── api/
+    │   ├── models.py
+    │   ├── serializers.py
+    │   ├── views.py
+    │   └── urls.py
+    ├── notes/
+    │   ├── settings.py
+    │   └── urls.py
+    └── manage.py
 ```
 
 ---
 
-## 🚀 Setup Instructions
+## Running the Project
 
-### Prerequisites
-
-1. **Python 3.8+** installed
-   - Download from: https://www.python.org/downloads/
-   - **IMPORTANT:** Check "Add Python to PATH" during installation
-   - Verify: `python --version`
-
-2. **PowerShell** or **Command Prompt** (Windows)
-
-3. **VS Code** (recommended) or any text editor
-
----
-
-### Installation Steps
-
-#### 1. Navigate to Project Directory
+### Backend
 
 ```powershell
-cd C:\Users\domin\Desktop\MMA\XPC-MMA-2025\django_notes_backend
-```
-
-#### 2. Create Virtual Environment
-
-```powershell
-python -m venv env
-```
-
-**What this does:** Creates isolated Python environment in `env` folder.
-
-#### 3. Enable PowerShell Scripts (Windows)
-
-```powershell
-Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
-```
-
-**When prompted:** Type `Y` and press Enter.
-
-#### 4. Activate Virtual Environment
-
-```powershell
-.\env\Scripts\Activate
-```
-
-**You should see:** `(env)` appears before your prompt.
-
-```powershell
-(env) PS C:\...\django_notes_backend>
-```
-
-#### 5. Install Django & REST Framework
-
-```powershell
-pip install django
-pip install djangorestframework
-```
-
-**Expected output:**
-```
-Successfully installed django-6.0.3 ...
-Successfully installed djangorestframework-3.16.1
-```
-
-#### 6. Navigate to Django Project
-
-```powershell
+cd django_notes_backend
+env\Scripts\activate
 cd notes
-```
-
-#### 7. Apply Database Migrations
-
-```powershell
-python manage.py migrate
-```
-
-**Creates:** Database tables for Django admin, auth, sessions, and your Note model.
-
-#### 8. Create Superuser (Admin Access)
-
-```powershell
-python manage.py createsuperuser
-```
-
-**Enter:**
-- Username: `admin` (or your choice)
-- Email: (press Enter to skip)
-- Password: `admin123` (or your choice - won't display as you type)
-
-**Note:** Password must be at least 8 characters.
-
----
-
-### Running the Server
-
-```powershell
 python manage.py runserver
 ```
 
-**Expected output:**
+### Frontend (Chrome)
+
+```powershell
+cd django_notes_backend\flutter\noteapp
+flutter run -d chrome
 ```
-Django version 6.0.3, using settings 'notes.settings'
-Starting development server at http://127.0.0.1:8000/
-Quit the server with CTRL-BREAK.
+
+### Frontend (Android Emulator)
+
+Change `urls.dart`:
+```dart
+const String baseUrl = 'http://10.0.2.2:8000';
 ```
-
-**Server is now running at:** http://127.0.0.1:8000/
-
-**To stop:** Press `Ctrl + C`
+Then run `flutter run`.
 
 ---
 
-## 🧪 Testing the API
+## API Endpoints
 
-### Available Endpoints
+Base URL: `http://127.0.0.1:8000/api/`
 
-| Endpoint | Method | Description | URL |
-|----------|--------|-------------|-----|
-| Routes | GET | List all endpoints | http://127.0.0.1:8000/api/ |
-| Get All Notes | GET | Retrieve all notes | http://127.0.0.1:8000/api/notes/ |
-| Get Single Note | GET | Retrieve note by ID | http://127.0.0.1:8000/api/notes/1/ |
-| Create Note | POST | Create new note | http://127.0.0.1:8000/api/notes/create/ |
-| Update Note | PUT | Update existing note | http://127.0.0.1:8000/api/notes/1/update/ |
-| Delete Note | DELETE | Delete note | http://127.0.0.1:8000/api/notes/1/delete/ |
-| Admin Panel | - | Manage data visually | http://127.0.0.1:8000/admin/ |
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/notes/` | All notes |
+| GET | `/notes/<id>/` | Single note |
+| POST | `/notes/create/` | Create note |
+| PUT | `/notes/<id>/update/` | Update note |
+| DELETE | `/notes/<id>/delete/` | Delete note |
 
----
-
-### 1. View API Routes
-
-**URL:** http://127.0.0.1:8000/api/
-
-**Response:** JSON array listing all available endpoints.
-
----
-
-### 2. Admin Panel - Add Test Data
-
-**URL:** http://127.0.0.1:8000/admin/
-
-**Login:**
-- Username: `admin`
-- Password: `admin123`
-
-**Steps:**
-1. Click **"Notes"**
-2. Click **"+ Add Note"**
-3. Enter text in **Body** field
-4. Click **"Save"**
-5. Add 2-3 more test notes
-
----
-
-### 3. GET All Notes
-
-**URL:** http://127.0.0.1:8000/api/notes/
-
-**Response:**
+Request/response body:
 ```json
-[
-    {
-        "id": 1,
-        "body": "First Django backend note",
-        "updated": "2026-03-09T23:30:00Z",
-        "created": "2026-03-09T23:30:00Z"
-    },
-    {
-        "id": 2,
-        "body": "Learning REST API development",
-        "updated": "2026-03-09T23:30:05Z",
-        "created": "2026-03-09T23:30:05Z"
-    }
-]
+{ "body": "Note text here" }
 ```
 
 ---
 
-### 4. GET Single Note
+## Cviko 6 — Django REST API
 
-**URL:** http://127.0.0.1:8000/api/notes/1/
-
-**Response:**
-```json
-{
-    "id": 1,
-    "body": "First Django backend note",
-    "updated": "2026-03-09T23:30:00Z",
-    "created": "2026-03-09T23:30:00Z"
-}
-```
-
----
-
-### 5. POST Create Note
-
-**URL:** http://127.0.0.1:8000/api/notes/create/
-
-**In REST Framework Interface:**
-1. Scroll to **Content** field
-2. Enter:
-```json
-{
-    "body": "New note created via API"
-}
-```
-3. Click **POST** button
-
-**Response:** Newly created note with ID, timestamps.
-
----
-
-### 6. PUT Update Note
-
-**URL:** http://127.0.0.1:8000/api/notes/1/update/
-
-**In REST Framework Interface:**
-1. Enter:
-```json
-{
-    "body": "This note has been updated!"
-}
-```
-2. Click **PUT** button
-
-**Response:** Updated note with new `updated` timestamp.
-
----
-
-### 7. DELETE Note
-
-**URL:** http://127.0.0.1:8000/api/notes/1/delete/
-
-**Click:** DELETE button
-
-**Response:** `"Note was deleted!"`
-
----
-
-## 💡 Code Explanation
-
-### models.py - Database Schema
+### Model
 
 ```python
-from django.db import models
-
 class Note(models.Model):
     body = models.TextField()
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
-    
-    def __str__(self):
-        return self.body[0:50]
-    
+
     class Meta:
         ordering = ['-updated']
 ```
 
-**Fields:**
-- `body`: TextField - unlimited text storage
-- `updated`: DateTimeField - auto-updates on save
-- `created`: DateTimeField - auto-sets on creation
-- `__str__`: Returns first 50 characters for display
-- `ordering`: Newest notes first (descending by updated)
-
-**Database Table:** `api_note`  
-**Columns:** id, body, updated, created
-
----
-
-### serializers.py - JSON Conversion
+### Serializer
 
 ```python
-from rest_framework.serializers import ModelSerializer
-from .models import Note
-
 class NoteSerializer(ModelSerializer):
     class Meta:
         model = Note
         fields = '__all__'
 ```
 
-**Purpose:** Converts Python Note objects ↔ JSON
+### Views
 
-**How it works:**
-```
-Python Object → Serializer → JSON → API Response
-```
+Each view is a simple function decorated with `@api_view`. The decorator restricts which HTTP methods are accepted. `NoteSerializer` handles converting the model instance to JSON and back.
 
----
-
-### views.py - API Logic
-
-#### GET All Notes
 ```python
 @api_view(['GET'])
 def getNotes(request):
     notes = Note.objects.all()
     serializer = NoteSerializer(notes, many=True)
     return Response(serializer.data)
-```
 
-#### GET Single Note
-```python
-@api_view(['GET'])
-def getNote(request, pk):
-    note = Note.objects.get(id=pk)
-    serializer = NoteSerializer(note, many=False)
-    return Response(serializer.data)
-```
-
-#### POST Create Note
-```python
 @api_view(['POST'])
 def createNote(request):
-    data = request.data
-    note = Note.objects.create(body=data['body'])
+    note = Note.objects.create(body=request.data['body'])
     serializer = NoteSerializer(note, many=False)
     return Response(serializer.data)
-```
 
-#### PUT Update Note
-```python
 @api_view(['PUT'])
 def updateNote(request, pk):
-    data = request.data
     note = Note.objects.get(id=pk)
-    serializer = NoteSerializer(instance=note, data=data)
-    
+    serializer = NoteSerializer(instance=note, data=request.data)
     if serializer.is_valid():
         serializer.save()
-    
     return Response(serializer.data)
-```
 
-#### DELETE Note
-```python
 @api_view(['DELETE'])
 def deleteNote(request, pk):
     note = Note.objects.get(id=pk)
@@ -417,279 +147,112 @@ def deleteNote(request, pk):
     return Response('Note was deleted!')
 ```
 
----
+### URL Routing
 
-### urls.py - URL Routing
-
-**api/urls.py** (Application URLs):
 ```python
-from django.urls import path
-from . import views
-
+# api/urls.py
 urlpatterns = [
-    path('', views.getRoutes, name="routes"),
-    path('notes/', views.getNotes, name="notes"),
-    path('notes/create/', views.createNote, name="create-note"),  # Specific first
-    path('notes/<str:pk>/', views.getNote, name="note"),
-    path('notes/<str:pk>/update/', views.updateNote, name="update-note"),
-    path('notes/<str:pk>/delete/', views.deleteNote, name="delete-note"),
+    path('notes/', views.getNotes),
+    path('notes/create/', views.createNote),  # must be before <pk>
+    path('notes/<str:pk>/', views.getNote),
+    path('notes/<str:pk>/update/', views.updateNote),
+    path('notes/<str:pk>/delete/', views.deleteNote),
 ]
-```
 
-**notes/urls.py** (Project URLs):
-```python
-from django.contrib import admin
-from django.urls import path, include
-
+# notes/urls.py
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('api.urls')),
 ]
 ```
 
-**Important:** Specific paths (`notes/create/`) must come **before** wildcard paths (`notes/<str:pk>/`)
+`notes/create/` must be declared before `notes/<str:pk>/` — Django matches URLs top to bottom, so a wildcard pattern would otherwise intercept the create route.
 
 ---
 
-## 🔧 Key Concepts
+## Cviko 7 — CORS + Flutter Frontend
 
-### 1. MVT Pattern (Model-View-Template)
-- **Model** (models.py): Database structure
-- **View** (views.py): Business logic
-- **Template**: HTML (not used - REST API only)
+### CORS Configuration
 
-### 2. ORM (Object-Relational Mapping)
+CORS is required because the Flutter app runs on a different port than Django. Without it, the browser blocks cross-origin requests.
+
 ```python
-# Python code
-notes = Note.objects.all()
+# settings.py
 
-# SQL equivalent
-SELECT * FROM api_note;
+INSTALLED_APPS = [
+    ...
+    'corsheaders',
+]
+
+MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',  # must be first
+    ...
+]
+
+CORS_ALLOW_ALL_ORIGINS = True
 ```
 
-### 3. REST API Principles
-| HTTP Method | CRUD Operation | Example |
-|-------------|----------------|---------|
-| GET | Read | Get notes |
-| POST | Create | Add note |
-| PUT | Update | Modify note |
-| DELETE | Delete | Remove note |
+### Flutter — urls.dart
 
-### 4. Serialization
-```
-Database → Python Object → Serializer → JSON → API
-```
+```dart
+const String baseUrl = 'http://localhost:8000';
 
----
+const String notesUrl = '$baseUrl/api/notes/';
+const String createNoteUrl = '$baseUrl/api/notes/create/';
 
-## 🐛 Troubleshooting
-
-### Issue: "python is not recognized"
-**Solution:**
-- Reinstall Python with "Add to PATH" checked
-- Or add manually to system PATH
-
-### Issue: Virtual environment won't activate
-**Solution:**
-```powershell
-Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+String getNoteUrl(String pk) => '$baseUrl/api/notes/$pk/';
+String updateNoteUrl(String pk) => '$baseUrl/api/notes/$pk/update/';
+String deleteNoteUrl(String pk) => '$baseUrl/api/notes/$pk/delete/';
 ```
 
-### Issue: "No module named 'rest_framework'"
-**Solution:**
-```powershell
-# Ensure env is activated
-.\env\Scripts\Activate
-pip install djangorestframework
+### Flutter — HTTP Pattern
+
+All screens follow the same pattern — call the endpoint, check status code, pop back with `true` to signal the list to refresh.
+
+```dart
+// GET
+final response = await http.get(Uri.parse(notesUrl));
+notes = jsonDecode(response.body);
+
+// POST
+final response = await http.post(
+    Uri.parse(createNoteUrl),
+    headers: {'Content-Type': 'application/json'},
+    body: jsonEncode({'body': bodyController.text}),
+);
+
+// PUT
+final response = await http.put(
+    Uri.parse(updateNoteUrl(id)),
+    headers: {'Content-Type': 'application/json'},
+    body: jsonEncode({'body': bodyController.text}),
+);
+
+// DELETE
+await http.delete(Uri.parse(deleteNoteUrl(id)));
 ```
 
-### Issue: Migration errors
-**Solution:**
-```powershell
-python manage.py makemigrations
-python manage.py migrate
-```
+### Flutter — Navigation
 
-### Issue: Port 8000 already in use
-**Solution:**
-```powershell
-# Use different port
-python manage.py runserver 8080
-```
+Child screens return `true` on success. The list screen uses this to decide whether to re-fetch.
 
-### Issue: CREATE endpoint shows error
-**Solution:** Check `api/urls.py` - `notes/create/` must come **before** `notes/<str:pk>/`
-
----
-
-## 📊 Database Management
-
-### View Database Shell
-```powershell
-python manage.py dbshell
-```
-
-### Python Shell with Django
-```powershell
-python manage.py shell
-```
-
-**Example usage:**
-```python
-from api.models import Note
-
-# Create note
-note = Note.objects.create(body="Test note")
-
-# Get all notes
-notes = Note.objects.all()
-
-# Update note
-note.body = "Updated text"
-note.save()
-
-# Delete note
-note.delete()
+```dart
+final result = await Navigator.push(context, MaterialPageRoute(...));
+if (result == true) fetchNotes();
 ```
 
 ---
 
-## 🔄 Daily Development Workflow
+## Common Issues
 
-### Start Working
-```powershell
-cd C:\Users\domin\Desktop\MMA\XPC-MMA-2025\django_notes_backend\notes
-.\env\Scripts\Activate
-python manage.py runserver
-```
+**CORS error in browser**  
+Check that `CorsMiddleware` is the first entry in `MIDDLEWARE` and `CORS_ALLOW_ALL_ORIGINS = True` is set.
 
-### Make Changes to Models
-```powershell
-# After editing models.py
-python manage.py makemigrations
-python manage.py migrate
-```
+**Flutter can't connect to backend**  
+Make sure Django is running. Use `localhost:8000` for Chrome, `10.0.2.2:8000` for Android emulator.
 
-### Stop Working
-```powershell
-# Stop server: Ctrl + C
-deactivate
-```
+**Emulator won't start (disk space)**  
+Run on Chrome with `flutter run -d chrome` instead.
 
----
-
-## 📚 File Changes Summary
-
-### Files Created
-
-1. **`api/models.py`** - Note model definition
-2. **`api/serializers.py`** - NoteSerializer class (NEW FILE)
-3. **`api/views.py`** - CRUD view functions
-4. **`api/urls.py`** - API URL routing (NEW FILE)
-5. **`api/admin.py`** - Admin panel registration
-6. **`notes/settings.py`** - Added apps to INSTALLED_APPS
-7. **`notes/urls.py`** - Included API URLs
-8. **`db.sqlite3`** - Database file (auto-generated)
-9. **`api/migrations/0001_initial.py`** - Note model migration (auto-generated)
-
-### Files Modified
-
-- `notes/settings.py` - Added `'api.apps.ApiConfig'` and `'rest_framework'`
-- `notes/urls.py` - Added `path('api/', include('api.urls'))`
-- `api/admin.py` - Registered Note model
-- `api/models.py` - Created Note model
-- `api/views.py` - Created all view functions
-
----
-
-## ✅ Assignment Checklist
-
-**Part 1: Setup (3 points)**
-- [x] Virtual environment created
-- [x] Django installed
-- [x] Project created and running
-
-**Part 2: Functionality (7 points)**
-- [x] Note model (body, updated, created)
-- [x] REST Framework installed
-- [x] NoteSerializer created
-- [x] GET all notes endpoint
-- [x] GET single note endpoint
-- [x] POST create endpoint
-- [x] PUT update endpoint
-- [x] DELETE endpoint
-- [x] URL routing configured
-- [x] Admin panel setup
-
-**Total: 10/10 points** ✅
-
----
-
-## 🎓 Learning Outcomes
-
-### Skills Demonstrated
-1. ✅ Django project structure
-2. ✅ Virtual environment management
-3. ✅ Database modeling (ORM)
-4. ✅ REST API development
-5. ✅ Serialization
-6. ✅ URL routing
-7. ✅ CRUD operations
-8. ✅ Admin panel configuration
-
-### Django Concepts Mastered
-- MVT pattern
-- Models and migrations
-- Django ORM
-- REST Framework
-- Serializers
-- ViewSets and API views
-- URL configuration
-- Admin interface
-
----
-
-## 🔄 Git Workflow
-
-```bash
-cd C:\Users\domin\Desktop\MMA\XPC-MMA-2025
-
-# Stage changes
-git add django_notes_backend
-
-# Commit
-git commit -m "Complete Django REST API backend - Cviko6 (10pts)"
-
-# Push
-git push origin main
-```
-
----
-
-## 📚 Resources
-
-- **Django Documentation:** https://docs.djangoproject.com/
-- **REST Framework:** https://www.django-rest-framework.org/
-- **Django Tutorial:** https://docs.djangoproject.com/en/stable/intro/tutorial01/
-- **REST API Guide:** https://restfulapi.net/
-
----
-
-## 👨‍💻 Author
-
-**Dominik Sabota**  
-VUT FIT - XPC-MMA 2025/2026  
-GitHub: https://github.com/dmnkSabota/XPC-MMA-2025
-
----
-
-## 📄 License
-
-This project is part of VUT FIT coursework.
-
----
-
-**Last Updated:** March 10, 2026  
-**Django Version:** 6.0.3  
-**Python Version:** 3.12.2  
-**REST Framework:** 3.16.1
+**`notes/create/` returns 404**  
+Check URL order in `api/urls.py` — `create/` must come before `<str:pk>/`.
