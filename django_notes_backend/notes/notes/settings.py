@@ -37,11 +37,13 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    'api.apps.ApiConfig',      # ← ADDED THIS LINE
-    'rest_framework',          # ← ADDED THIS LINE
+    'api.apps.ApiConfig',
+    'rest_framework',
+    'corsheaders',        # ← ADDED
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',   # ← ADDED FIRST
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -117,3 +119,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = "static/"
+
+# CORS
+CORS_ALLOW_ALL_ORIGINS = True  # ← ADDED
